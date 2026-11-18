@@ -7,11 +7,11 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "@canvas-glide/fiore": "file:../../../fiore",
+    "@canvas-glide/fiore": "^1.0.0",
     "@canvas-glide/react": "^1.0.1",
-    "@fiorejs/jsx": "^2.1.0",
-    "@fiorejs/signals": "^2.1.0",
-    "fiorejs": "^2.1.0",
+    "@fiorejs/jsx": "^2.2.0",
+    "@fiorejs/signals": "^2.2.0",
+    "fiorejs": "^2.2.0",
     "localforage": "^1.10.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"

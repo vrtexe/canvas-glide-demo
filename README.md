@@ -1,6 +1,6 @@
 # canvas-glide demo
 
-One page that shows [canvas-glide](https://github.com/vrtexe/canvas-glide) in the frameworks it supports: React, Solid, Svelte, Vue, Qwik and Angular, at https://vrtexe.github.io/canvas-glide-demo/. A tab in the header switches the framework; below it is that framework's demo, with the same toolbars in every one: renderer tabs, zoom, Center, Fit, Upload and the theme. The Source button shows the code of the demo that is open.
+One page that shows [canvas-glide](https://github.com/vrtexe/canvas-glide) in the frameworks it supports: React, Solid, Svelte, Vue, Qwik, Angular and fiorejs, at https://vrtexe.github.io/canvas-glide-demo/. A tab in the header switches the framework; below it is that framework's demo, with the same toolbars in every one: renderer tabs, zoom, Center, Fit, Upload and the theme. The Source button shows the code of the demo that is open.
 
 Each framework is an app in `apps/<framework>`, built with the framework's own tooling. The shell in `public/` shows the selected app in an iframe. The apps keep the uploaded image and the theme in the same origin's storage, so switching frameworks keeps both. `shared/README.md` describes what an app has to do.
 
@@ -12,9 +12,8 @@ Each framework is an app in `apps/<framework>`, built with the framework's own t
 | Vue | `apps/vue` | [`@canvas-glide/vue`](https://github.com/vrtexe/canvas-glide-vue) |
 | Qwik | `apps/qwik` | [`@canvas-glide/qwik`](https://github.com/vrtexe/canvas-glide-qwik) |
 | Angular | `apps/angular` | [`@canvas-glide/angular`](https://github.com/vrtexe/canvas-glide-angular) |
-| fiorejs | `apps/fiore` | `@canvas-glide/fiore` |
+| fiorejs | `apps/fiore` | [`@canvas-glide/fiore`](https://github.com/vrtexe/canvas-glide-fiore) |
 
-`apps/fiore` is not on the site yet: `@canvas-glide/fiore` is not on npm, so the app installs it from `../../../fiore`, a sibling checkout of the adapter, and only builds in that layout. Once the package is published, the app switches to it and gets its entry back in `public/frameworks.js`.
 
 ## Build and run
 
