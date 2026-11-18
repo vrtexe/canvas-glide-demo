@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@canvas-glide/svelte": "^1.0.1",
+    "localforage": "^1.10.0",
     "svelte": "^5.58.0"
   },
   "devDependencies": {

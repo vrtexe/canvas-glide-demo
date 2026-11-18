@@ -1,0 +1,52 @@
+<div class="toolbar toolbar--tabs">
+  @for (t of tabs; track t.value) {
+    <button class="tab" [class.tab--active]="t === tab()" (click)="tab.set(t)">{{ t.label }}</button>
+  }
+</div>
+
+<div class="toolbar-row">
+  <div class="toolbar toolbar--controls">
+    <button class="icon-btn" title="Zoom in" (click)="viewer.glide.zoomIn()">+</button>
+    <button class="icon-btn" title="Zoom out" (click)="viewer.glide.zoomOut()">−</button>
+    <span class="divider"></span>
+    <button (click)="viewer.glide.center()">Center</button>
+    <button (click)="viewer.glide.fit()">Fit</button>
+    <span class="divider"></span>
+    <label class="upload-btn">
+      Upload
+      <input #upload type="file" accept="image/*" (change)="onUpload($event)" />
+    </label>
+    <button (click)="clear(upload)">✕</button>
+  </div>
+
+  <div class="toolbar toolbar--theme">
+    <div class="dropdown">
+      <button class="dropdown-trigger" aria-haspopup="listbox" [attr.aria-expanded]="themeOpen()" (click)="themeOpen.set(!themeOpen())">
+        <span class="dropdown-value">
+          <span class="dropdown-label">{{ themeLabel(theme()) }}</span>
+        </span>
+      </button>
+      @if (themeOpen()) {
+        <ul class="dropdown-menu" role="listbox">
+          @for (option of themes; track option.value) {
+            <li role="none">
+              <button
+                role="option"
+                class="dropdown-item"
+                [class.dropdown-item--active]="theme() === option.value"
+                [attr.aria-selected]="theme() === option.value"
+                (click)="chooseTheme(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+</div>
+
+<div style="width: 100dvw; height: 100dvh; overflow: hidden">
+  <glide-canvas #viewer [renderer]="tab().renderer" [image]="file()" />
+</div>

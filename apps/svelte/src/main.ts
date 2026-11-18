@@ -1,5 +1,9 @@
 import { mount } from 'svelte';
-import '../../../shared/app.css';
+import './index.css';
 import App from './App.svelte';
 
-mount(App, { target: document.getElementById('root')! });
+const app = mount(App, {
+  target: document.getElementById('root')!,
+});
+
+export default app;

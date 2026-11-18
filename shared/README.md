@@ -1,25 +1,11 @@
 # App contract
 
-Every folder in `apps/` is a standalone app for one framework, built with that framework's usual tooling, and shown by the shell (`public/index.html`) in an iframe at `/<framework>/`. Each app uses the published `@canvas-glide/<framework>` package the way its README shows, so its source doubles as the usage example in the shell's Source panel.
+Every folder in `apps/` is the canvas-glide demo for one framework, built with that framework's usual tooling. The shell (`public/index.html`) is a header with one tab per framework and shows the selected app in an iframe at `/<framework>/`. Each app uses the published `@canvas-glide/<framework>` package, so its source doubles as the usage example in the shell's Source panel.
+
+All apps have the same interface, first written for the React demo: renderer tabs at the top left, zoom, Center, Fit, Upload and clear at the top right, and a theme menu. Its styles are `src/App.css` and `src/index.css` (Angular: `src/app/app.css` and `src/styles.css`), the same in every app.
 
 An app must:
 
-- Build into its own `dist/` with relative asset paths (Vite `base: './'`, Angular `--base-href ./`), so it works under any path.
-- Import `../../shared/app.css` (or list it in its styles) and render this markup, in the framework's own syntax:
-
-  ```html
-  <div class="app">
-    <!-- the adapter's GlideCanvas, filling .app, with the image and renderer below -->
-    <div class="toolbar">
-      <button type="button">Zoom out</button>
-      <button type="button">Zoom in</button>
-      <button type="button">Fit</button>
-      <output class="scale">100%</output>
-    </div>
-  </div>
-  ```
-
-  The scale is `Math.round(transform.scale * 100)` followed by `%`, and follows the transform.
-- Listen for `message` events whose `event.origin` is `location.origin` and whose `data.type` is `'canvas-glide-demo'`. `data.image` is a `Blob` or `null` and `data.renderer` is `'canvas'`, `'image'` or `'html'`; both replace the app's current values.
-- Once it listens, post `{ type: 'canvas-glide-demo-ready' }` to `window.parent` with `location.origin` as the target origin; the shell answers with the current state.
-- List the file the shell shows as source in the shell's `frameworks` table (`public/shell.js`); `build.mjs` copies it to `dist/<framework>/source.txt`.
+- Build into its own `dist/` with relative asset paths (Vite `base: './'`, Angular `baseHref: "./"`), so it works under any path.
+- Keep the image with [localforage](https://github.com/localForage/localForage) under the key `file`, and the theme in `localStorage` under `theme` (`'auto'`, `'light'` or `'dark'`, applied as `data-theme` on `<html>`, removed for `auto`). The apps share one origin, so switching frameworks keeps both, and the shell's header follows the theme through the `storage` event.
+- Be listed in `public/frameworks.js` with the file the Source panel shows; `build.mjs` builds the listed apps and copies that file to `dist/<framework>/source.txt`.

@@ -19,7 +19,9 @@
             "tsConfig": "tsconfig.json",
             "outputPath": { "base": "dist", "browser": "" },
             "baseHref": "./",
-            "styles": ["../../shared/app.css"]
+            "styles": ["src/styles.css"],
+            "allowedCommonJsDependencies": ["localforage"],
+            "assets": [{ "glob": "**/*", "input": "public" }]
           },
           "configurations": {
             "production": {

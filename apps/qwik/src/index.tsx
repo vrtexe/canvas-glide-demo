@@ -1,5 +1,7 @@
-import { render } from '@builder.io/qwik';
-import '../../../shared/app.css';
-import { App } from './app.tsx';
+import "@builder.io/qwik/qwikloader.js";
 
-render(document.body, <App />);
+import { render } from "@builder.io/qwik";
+import "./index.css";
+import { App } from "./app.tsx";
+
+render(document.getElementById("root") as HTMLElement, <App />);

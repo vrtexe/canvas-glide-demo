@@ -4,34 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>canvas-glide demo</title>
-    <meta name="description" content="Pan, zoom and pinch-to-zoom with canvas-glide in React, Solid, Svelte, Vue, Qwik, Angular and fiorejs." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <meta name="description" content="Pan, zoom and pinch-to-zoom with canvas-glide in React, Solid, Svelte, Vue, Qwik and Angular." />
+    <link rel="icon" type="image/svg+xml" href="./react/favicon.svg" />
     <link rel="stylesheet" href="./shell.css" />
     <script type="module" src="./shell.js"></script>
   </head>
   <body>
-    <header class="bar">
-      <h1 class="brand"><a href="https://github.com/vrtexe/canvas-glide">canvas-glide</a></h1>
-
-      <nav class="tabs" role="tablist" aria-label="Framework"></nav>
-
-      <div class="controls">
-        <label class="button">
-          <input id="file" type="file" accept="image/*" />
-          Open image
-        </label>
-        <label class="select">
-          <span class="visually-hidden">Renderer</span>
-          <select id="renderer">
-            <option value="canvas">Canvas</option>
-            <option value="image">Image</option>
-            <option value="html">HTML</option>
-          </select>
-        </label>
-        <button id="source" class="button" type="button" aria-pressed="false" aria-controls="code">Source</button>
-      </div>
+    <header class="header">
+      <a class="brand" href="https://github.com/vrtexe/canvas-glide">canvas-glide</a>
+      <nav class="toolbar tabs" role="tablist" aria-label="Framework"></nav>
+      <button id="source" class="source" type="button" aria-pressed="false" aria-controls="code">Source</button>
     </header>
 
     <main class="stage">
