@@ -7,6 +7,17 @@
     <title>canvas-glide · Qwik</title>
     <!-- Qwik CSR builds ship only the preloader; this classic script dispatches the on*$ handlers. -->
     <script src="./qwikloader.js"></script>
+    <script>
+      // The theme is picked in the demo's header and reaches this frame through localStorage.
+      {
+        const apply = (theme) =>
+          theme === 'light' || theme === 'dark'
+            ? (document.documentElement.dataset.theme = theme)
+            : delete document.documentElement.dataset.theme;
+        apply(localStorage.getItem('theme'));
+        addEventListener('storage', (event) => event.key === 'theme' && apply(event.newValue));
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

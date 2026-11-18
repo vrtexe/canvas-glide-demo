@@ -1,5 +1,5 @@
-// The shell is a header over one framework demo in an iframe. The demos keep the image and the theme in the same
-// origin's storage, so switching frameworks keeps both.
+// The shell is a header over one framework demo in an iframe. The demos keep the image in the same origin's storage,
+// so switching frameworks keeps it; the theme is picked here and reaches the demo through localStorage.
 import { frameworks } from './frameworks.js';
 
 const tabs = document.querySelector('.tabs');
@@ -7,11 +7,42 @@ const frame = document.querySelector('#frame');
 const sourceButton = document.querySelector('#source');
 const code = document.querySelector('#code');
 
+const themeButton = document.querySelector('#theme');
+const themeMenu = document.querySelector('#theme-menu');
+
+const icon = (body) =>
+  `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+const themes = [
+  { value: 'auto', label: 'Auto', icon: icon('<rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" />') },
+  { value: 'light', label: 'Light', icon: icon('<circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />') },
+  { value: 'dark', label: 'Dark', icon: icon('<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />') },
+];
+
 let current = null;
 
-function applyTheme(theme) {
-  if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
-  else delete document.documentElement.dataset.theme;
+function applyTheme(value) {
+  const theme = themes.find((entry) => entry.value === value) ?? themes[0];
+  if (theme.value === 'auto') delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = theme.value;
+  themeButton.querySelector('.dropdown-value').innerHTML = `${theme.icon}<span class="dropdown-label">${theme.label}</span>`;
+  themeButton.setAttribute('aria-label', `Theme: ${theme.label}`);
+  for (const option of themeMenu.querySelectorAll('[role="option"]')) {
+    const selected = option.dataset.value === theme.value;
+    option.setAttribute('aria-selected', String(selected));
+    option.classList.toggle('dropdown-item--active', selected);
+  }
+}
+
+function setThemeMenu(open) {
+  themeMenu.hidden = !open;
+  themeButton.setAttribute('aria-expanded', String(open));
+}
+
+function chooseTheme(value) {
+  localStorage.setItem('theme', value);
+  applyTheme(value);
+  setThemeMenu(false);
+  themeButton.focus();
 }
 
 async function showSource(framework) {
@@ -71,7 +102,27 @@ sourceButton.addEventListener('click', () => {
   if (!code.hidden) showSource(frameworks.find((entry) => entry.id === current));
 });
 
-// A theme picked inside a demo is written to localStorage, which fires `storage` here.
+for (const theme of themes) {
+  const item = document.createElement('li');
+  item.role = 'none';
+  item.innerHTML = `<button type="button" role="option" class="button dropdown-item" data-value="${theme.value}">${theme.icon}${theme.label}</button>`;
+  item.firstElementChild.addEventListener('click', () => chooseTheme(theme.value));
+  themeMenu.append(item);
+}
+
+themeButton.addEventListener('click', () => setThemeMenu(themeMenu.hidden));
+document.addEventListener('click', (event) => {
+  if (!themeMenu.hidden && !event.target.closest('.dropdown')) setThemeMenu(false);
+});
+// A click in the demo frame does not reach this document, but it takes the focus from this window.
+window.addEventListener('blur', () => setThemeMenu(false));
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !themeMenu.hidden) {
+    setThemeMenu(false);
+    themeButton.focus();
+  }
+});
+// A theme changed in another tab of the browser.
 window.addEventListener('storage', (event) => event.key === 'theme' && applyTheme(event.newValue));
 window.addEventListener('hashchange', () => select(location.hash.slice(1)));
 

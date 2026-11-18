@@ -6,6 +6,17 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script>
+      // The theme is picked in the demo's header and reaches this frame through localStorage.
+      {
+        const apply = (theme) =>
+          theme === 'light' || theme === 'dark'
+            ? (document.documentElement.dataset.theme = theme)
+            : delete document.documentElement.dataset.theme;
+        apply(localStorage.getItem('theme'));
+        addEventListener('storage', (event) => event.key === 'theme' && apply(event.newValue));
+      }
+    </script>
   </head>
   <body>
     <app-root></app-root>

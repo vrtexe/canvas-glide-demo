@@ -13,7 +13,18 @@
     <header class="header">
       <a class="brand" href="https://github.com/vrtexe/canvas-glide">canvas-glide</a>
       <nav class="toolbar tabs" role="tablist" aria-label="Framework"></nav>
-      <button id="source" class="source" type="button" aria-pressed="false" aria-controls="code">Source</button>
+      <div class="actions">
+        <div class="dropdown">
+          <button id="theme" class="button dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-menu">
+            <span class="dropdown-value"></span>
+            <svg class="dropdown-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <ul id="theme-menu" class="dropdown-menu" role="listbox" aria-label="Theme" hidden></ul>
+        </div>
+        <button id="source" class="button" type="button" aria-pressed="false" aria-controls="code">Source</button>
+      </div>
     </header>
 
     <main class="stage">

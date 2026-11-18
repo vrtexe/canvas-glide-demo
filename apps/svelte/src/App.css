@@ -299,77 +299,6 @@
   display: none;
 }
 
-.dropdown {
-  position: relative;
-}
-
-.dropdown-trigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  min-width: 96px;
-}
-
-.dropdown-value {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dropdown-value svg,
-.dropdown-item svg {
-  flex: none;
-}
-
-.dropdown-caret {
-  flex: none;
-  opacity: 0.7;
-  transition: transform 0.15s ease;
-}
-
-.dropdown-trigger[aria-expanded='true'] .dropdown-caret {
-  transform: rotate(180deg);
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  min-width: 100%;
-  margin: 0;
-  padding: 6px;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--surface) 96%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--surface-border);
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.18),
-    0 2px 8px rgba(0, 0, 0, 0.12);
-  z-index: 1001;
-}
-
-.dropdown-item {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: flex-start;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.dropdown-menu .dropdown-item--active,
-.dropdown-menu .dropdown-item--active:hover {
-  background: var(--accent);
-  color: #fff;
-}
-
 /* Bigger touch targets on touch devices (44px is the recommended minimum). */
 @media (pointer: coarse) {
   .toolbar button,
@@ -382,31 +311,19 @@
     width: 44px;
     height: 44px;
   }
-
-  .dropdown-item {
-    min-height: 44px;
-  }
 }
 
-/* Phone layout: tabs stay top-left, theme picker collapses to an icon
-   top-right, and the crowded controls toolbar moves to a thumb-reachable
-   bottom bar so the two top toolbars no longer collide. */
+/* Phone layout: tabs stay top-left and the crowded controls toolbar moves
+   to a thumb-reachable bottom bar so the two toolbars no longer collide. */
 @media (max-width: 640px) {
   .toolbar--tabs {
     top: max(12px, env(safe-area-inset-top));
     left: max(12px, env(safe-area-inset-left));
   }
 
-  /* Let the two toolbars inside the row position themselves independently. */
+  /* Let the toolbar inside the row position itself. */
   .toolbar-row {
     display: contents;
-  }
-
-  .toolbar--theme {
-    position: fixed;
-    top: max(12px, env(safe-area-inset-top));
-    right: max(12px, env(safe-area-inset-right));
-    z-index: 1000;
   }
 
   .toolbar--controls {
@@ -417,13 +334,5 @@
     z-index: 1000;
     max-width: calc(100dvw - 24px);
     overflow-x: auto;
-  }
-
-  .dropdown-label {
-    display: none;
-  }
-
-  .dropdown-trigger {
-    min-width: 0;
   }
 }
