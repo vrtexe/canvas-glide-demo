@@ -7,7 +7,7 @@
     "build": "vue-tsc && vite build"
   },
   "dependencies": {
-    "@canvas-glide/vue": "^1.0.1",
+    "@canvas-glide/vue": "^1.0.2",
     "localforage": "^1.10.0",
     "vue": "^3.5.45"
   },

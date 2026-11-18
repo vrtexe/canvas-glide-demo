@@ -7,7 +7,7 @@
     "build": "svelte-check && vite build"
   },
   "dependencies": {
-    "@canvas-glide/svelte": "^1.0.1",
+    "@canvas-glide/svelte": "^1.0.2",
     "localforage": "^1.10.0",
     "svelte": "^5.58.0"
   },
