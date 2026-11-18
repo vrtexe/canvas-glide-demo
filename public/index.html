@@ -2,24 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>canvas-glide demo</title>
-    <meta name="description" content="Pan, zoom and pinch-to-zoom with canvas-glide in React, Solid, Svelte, Vue, Qwik, Angular and fiorejs." />
-    <link rel="icon" type="image/svg+xml" href="./react/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>CanvasGlide demo</title>
+    <meta name="description" content="Pan, zoom and pinch-to-zoom with CanvasGlide in React, Solid, Svelte, Vue, Qwik, Angular and fiorejs." />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="stylesheet" href="./shell.css" />
+    <link rel="stylesheet" href="./vendor/highlight/github.min.css" media="(prefers-color-scheme: light)" id="code-light" />
+    <link rel="stylesheet" href="./vendor/highlight/github-dark.min.css" media="(prefers-color-scheme: dark)" id="code-dark" />
     <script src="./localforage.min.js"></script>
     <script type="module" src="./shell.js"></script>
   </head>
   <body>
     <header class="header">
-      <a class="brand" href="https://github.com/vrtexe/canvas-glide">canvas-glide</a>
-      <nav class="toolbar tabs" role="tablist" aria-label="Framework"></nav>
+      <a class="brand" href="https://github.com/vrtexe/canvas-glide">
+        <svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M4 11V7.5A3.5 3.5 0 0 1 7.5 4H11M21 4h3.5A3.5 3.5 0 0 1 28 7.5V11M28 21v3.5a3.5 3.5 0 0 1-3.5 3.5H21M11 28H7.5A3.5 3.5 0 0 1 4 24.5V21" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" />
+          <rect x="11.5" y="11.5" width="13" height="13" rx="3.5" fill="var(--accent)" />
+        </svg>
+        CanvasGlide
+      </a>
+
+      <nav class="toolbar tabs" role="tablist" aria-label="Framework">
+        <span class="indicator" aria-hidden="true"></span>
+      </nav>
+
       <div class="actions">
-        <label class="button upload">
-          <input id="file" type="file" accept="image/*" />
-          Upload
-        </label>
-        <button id="clear" class="button" type="button" aria-label="Remove the image">✕</button>
+        <div class="split" role="group" aria-label="Image">
+          <label class="button icon upload" title="Upload an image">
+            <input id="file" type="file" accept="image/*" />
+            <img src="./icons/ui-upload.svg" alt="" width="18" height="18" />
+            <span>Upload</span>
+          </label>
+          <button id="clear" class="button icon" type="button" aria-label="Remove the image" title="Remove the image" disabled>
+            <img src="./icons/ui-x.svg" alt="" width="18" height="18" />
+          </button>
+        </div>
         <div class="dropdown">
           <button id="theme" class="button dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-menu">
             <span class="dropdown-value"></span>
@@ -29,18 +46,40 @@
           </button>
           <ul id="theme-menu" class="dropdown-menu" role="listbox" aria-label="Theme" hidden></ul>
         </div>
-        <button id="source" class="button" type="button" aria-pressed="false" aria-controls="code">Source</button>
+        <button id="source" class="button icon" type="button" aria-pressed="false" aria-controls="code">
+          <img src="./icons/ui-code.svg" alt="" width="18" height="18" />
+          <span>Source</span>
+        </button>
+        <a class="button icon" href="https://github.com/vrtexe/canvas-glide" aria-label="CanvasGlide on GitHub" title="CanvasGlide on GitHub">
+          <img src="./icons/ui-github.svg" alt="" width="18" height="18" />
+        </a>
       </div>
     </header>
 
     <main class="stage">
-      <iframe id="frame" title="Demo" role="tabpanel"></iframe>
+      <div class="viewer">
+        <iframe id="frame" title="Demo" role="tabpanel"></iframe>
+        <footer class="viewer-foot">
+          <div class="install">
+            <code id="install-command"></code>
+            <button id="copy" class="copy" type="button" aria-label="Copy the install command" title="Copy">
+              <img src="./icons/ui-copy.svg" alt="" width="16" height="16" />
+            </button>
+            <span id="copied" class="copied" role="status"></span>
+          </div>
+          <ul class="hints" aria-label="How to use the viewer">
+            <li><img src="./icons/ui-hand.svg" alt="" width="16" height="16" />Drag to pan</li>
+            <li><img src="./icons/ui-mouse.svg" alt="" width="16" height="16" />Scroll or pinch to zoom</li>
+          </ul>
+        </footer>
+      </div>
+
       <section id="code" class="code" aria-label="Source" hidden>
         <header class="code-head">
           <span id="code-file"></span>
           <a id="code-repo" href="#">Adapter repository</a>
         </header>
-        <pre><code id="code-text"></code></pre>
+        <pre><code id="code-text" class="hljs"></code></pre>
       </section>
     </main>
   </body>

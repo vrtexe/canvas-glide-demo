@@ -1,6 +1,6 @@
-# canvas-glide demo
+# CanvasGlide demo
 
-One page that shows [canvas-glide](https://github.com/vrtexe/canvas-glide) in the frameworks it supports: React, Solid, Svelte, Vue, Qwik, Angular and fiorejs, at https://vrtexe.github.io/canvas-glide-demo/. The header switches the framework, uploads or removes the image and picks the theme; below it is that framework's demo, with the same toolbars in every one: renderer tabs, zoom, Center and Fit. The Source button shows the code of the demo that is open. The first visit starts with a generated sample grid.
+One page that shows [CanvasGlide](https://github.com/vrtexe/canvas-glide) in the frameworks it supports: React, Solid, Svelte, Vue, Qwik, Angular and fiorejs, at https://vrtexe.github.io/canvas-glide-demo/. The header switches the framework, uploads or removes the image and picks the theme; below it is that framework's demo, with the same toolbars in every one: renderer tabs, zoom, Center and Fit. The Source button shows the code of the demo that is open. The first visit starts with a generated sample grid.
 
 Each framework is an app in `apps/<framework>`, built with the framework's own tooling. The shell in `public/` shows the selected app in an iframe. It keeps the image and the theme in the origin's storage, where every app reads them, so switching frameworks keeps both. `shared/README.md` describes what an app has to do.
 
@@ -25,6 +25,13 @@ npm run serve    # serves dist/ at http://localhost:4400/
 `node build.mjs react vue` rebuilds only the named apps into an existing `dist/`. For work on one app, `npm run dev` in its folder starts that framework's dev server.
 
 `dist/` is a static site with relative paths, so it can be hosted under any path. A push to `main` builds it in GitHub Actions (`.github/workflows/pages.yml`) and deploys it to GitHub Pages; nothing built is committed.
+
+## Design
+
+The mark, Frame, is a viewport's corners around content panned inside it; `design/brand/` holds it with the two
+candidates it was chosen over, and `public/favicon.svg` is the site's icon. The framework logos in `public/icons/` are
+their owners' marks (`icons-credits.json` lists source and licence). `public/vendor/highlight/` is a subset of
+[highlight.js](https://highlightjs.org) 11.9.0 (BSD-3-Clause, licence beside it) that colours the Source panel.
 
 ## License
 

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <title>CanvasGlide</title>
+  <rect x="10" y="10" width="12" height="12" rx="3.25" fill="#aa3bff"/>
+  <path d="M4 10V4h6M4 4l4.5 4.5M28 22v6h-6M28 28l-4.5-4.5" stroke="#16171d" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

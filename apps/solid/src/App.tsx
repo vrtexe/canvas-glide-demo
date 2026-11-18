@@ -64,8 +64,8 @@ function App() {
             −
           </button>
           <span class="divider" />
-          <button onClick={() => handleRef?.center()}>Center</button>
-          <button onClick={() => handleRef?.fit()}>Fit</button>
+          <button data-icon="center" onClick={() => handleRef?.center()}>Center</button>
+          <button data-icon="fit" onClick={() => handleRef?.fit()}>Fit</button>
         </div>
       </div>
 

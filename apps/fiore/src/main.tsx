@@ -37,8 +37,8 @@ document.querySelector('#root')!.append(
         −
       </button>
       <span class="divider" />
-      <button onclick={glide.center}>Center</button>
-      <button onclick={glide.fit}>Fit</button>
+      <button data-icon="center" onclick={glide.center}>Center</button>
+      <button data-icon="fit" onclick={glide.fit}>Fit</button>
     </div>
   </div>,
   <div style={{ width: '100dvw', height: '100dvh', overflow: 'hidden' }}>

@@ -43,8 +43,8 @@
     <button class="icon-btn" title="Zoom in" onclick={() => glide.zoomIn()}>+</button>
     <button class="icon-btn" title="Zoom out" onclick={() => glide.zoomOut()}>−</button>
     <span class="divider"></span>
-    <button onclick={() => glide.center()}>Center</button>
-    <button onclick={() => glide.fit()}>Fit</button>
+    <button data-icon="center" onclick={() => glide.center()}>Center</button>
+    <button data-icon="fit" onclick={() => glide.fit()}>Fit</button>
   </div>
 </div>
 

@@ -268,6 +268,17 @@
   color: #fff;
 }
 
+/* The dark accent is light, so the selected tab's text is dark: 4.5:1 or more. */
+:root[data-theme='dark'] .toolbar button.tab--active {
+  color: #16171d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .toolbar button.tab--active {
+    color: #16171d;
+  }
+}
+
 .icon-btn {
   width: 34px;
   height: 34px;
@@ -276,6 +287,30 @@
   align-items: center;
   justify-content: center;
   font-size: 20px;
+}
+
+/* A button with data-icon gets that icon before its label, drawn in the text colour. */
+.toolbar button[data-icon] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toolbar button[data-icon]::before {
+  content: '';
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.toolbar button[data-icon='center'] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12h3m14 0h3M12 2v3m0 14v3'/%3E%3Ccircle cx='12' cy='12' r='7'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+}
+
+.toolbar button[data-icon='fit'] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2'/%3E%3C/svg%3E");
 }
 
 .toolbar .divider {

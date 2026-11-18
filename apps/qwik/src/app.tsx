@@ -51,8 +51,8 @@ export const App = component$(() => {
             −
           </button>
           <span class="divider" />
-          <button onClick$={() => glide.center$()}>Center</button>
-          <button onClick$={() => glide.fit$()}>Fit</button>
+          <button data-icon="center" onClick$={() => glide.center$()}>Center</button>
+          <button data-icon="fit" onClick$={() => glide.fit$()}>Fit</button>
         </div>
       </div>
 

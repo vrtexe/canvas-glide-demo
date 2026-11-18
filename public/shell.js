@@ -1,8 +1,18 @@
 // The shell is a header over one framework demo in an iframe. The image and the theme are picked here and kept in the
 // origin's storage, where every demo reads them: the image with localforage under `file`, the theme in localStorage.
+import hljs from './vendor/highlight/core.min.js';
+import javascript from './vendor/highlight/languages/javascript.min.js';
+import typescript from './vendor/highlight/languages/typescript.min.js';
+import xml from './vendor/highlight/languages/xml.min.js';
 import { frameworks } from './frameworks.js';
 
+// xml highlights the <script> of .vue and .svelte files through javascript and typescript.
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('xml', xml);
+
 const tabs = document.querySelector('.tabs');
+const indicator = tabs.querySelector('.indicator');
 const frame = document.querySelector('#frame');
 const sourceButton = document.querySelector('#source');
 const code = document.querySelector('#code');
@@ -11,6 +21,7 @@ const fileInput = document.querySelector('#file');
 const clearButton = document.querySelector('#clear');
 const themeButton = document.querySelector('#theme');
 const themeMenu = document.querySelector('#theme-menu');
+const install = document.querySelector('#install-command');
 
 const icon = (body) =>
   `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
@@ -33,6 +44,10 @@ function applyTheme(value) {
     option.setAttribute('aria-selected', String(selected));
     option.classList.toggle('dropdown-item--active', selected);
   }
+  // The code theme follows the system, or the theme picked here.
+  const forced = theme.value === 'auto' ? null : theme.value;
+  document.querySelector('#code-light').media = forced ? (forced === 'light' ? 'all' : 'not all') : '(prefers-color-scheme: light)';
+  document.querySelector('#code-dark').media = forced ? (forced === 'dark' ? 'all' : 'not all') : '(prefers-color-scheme: dark)';
 }
 
 function setThemeMenu(open) {
@@ -72,7 +87,7 @@ async function sampleImage() {
   context.font = '600 220px system-ui, sans-serif';
   context.textAlign = 'center';
   context.textBaseline = 'middle';
-  context.fillText('canvas-glide', width / 2, height / 2);
+  context.fillText('CanvasGlide', width / 2, height / 2);
   return canvas.convertToBlob({ type: 'image/png' });
 }
 
@@ -88,10 +103,19 @@ async function showSource(framework) {
   const text = document.querySelector('#code-text');
   try {
     const response = await fetch(`./${framework.id}/source.txt`);
-    text.textContent = response.ok ? await response.text() : 'The source of this demo is not in the build.';
+    if (response.ok) text.innerHTML = hljs.highlight(await response.text(), { language: framework.language }).value;
+    else text.textContent = 'The source of this demo is not in the build.';
   } catch {
     text.textContent = 'The source of this demo could not be loaded.';
   }
+}
+
+/** Slides the pill under the selected tab. */
+function moveIndicator() {
+  const tab = tabs.querySelector('[aria-selected="true"]');
+  if (!tab) return;
+  indicator.style.width = `${tab.offsetWidth}px`;
+  indicator.style.transform = `translateX(${tab.offsetLeft}px)`;
 }
 
 function select(id, focus = false) {
@@ -109,6 +133,8 @@ function select(id, focus = false) {
   frame.setAttribute('aria-labelledby', `tab-${framework.id}`);
   frame.src = `./${framework.id}/`;
   history.replaceState(null, '', `#${framework.id}`);
+  install.textContent = `npm i @canvas-glide/${framework.id}`;
+  moveIndicator();
   if (!code.hidden) showSource(framework);
 }
 
@@ -120,10 +146,19 @@ for (const framework of frameworks) {
   tab.className = 'tab';
   tab.dataset.id = framework.id;
   tab.setAttribute('aria-controls', 'frame');
-  tab.textContent = framework.name;
+  if (framework.logo) {
+    const logo = document.createElement('img');
+    logo.src = `./icons/${framework.logo}`;
+    logo.alt = '';
+    logo.width = logo.height = 18;
+    tab.append(logo);
+  }
+  tab.append(framework.name);
   tab.addEventListener('click', () => select(framework.id));
   tabs.append(tab);
 }
+
+new ResizeObserver(moveIndicator).observe(tabs);
 
 tabs.addEventListener('keydown', (event) => {
   const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
@@ -157,6 +192,16 @@ clearButton.addEventListener('click', () => {
   storeImage(null);
 });
 
+// The frame reloads after every upload or removal, so each load is when to check for an image.
+frame.addEventListener('load', async () => (clearButton.disabled = !(await localforage.getItem('file'))));
+
+document.querySelector('#copy').addEventListener('click', async () => {
+  await navigator.clipboard.writeText(install.textContent);
+  const copied = document.querySelector('#copied');
+  copied.textContent = 'Copied';
+  setTimeout(() => (copied.textContent = ''), 1500);
+});
+
 themeButton.addEventListener('click', () => setThemeMenu(themeMenu.hidden));
 document.addEventListener('click', (event) => {
   if (!themeMenu.hidden && !event.target.closest('.dropdown')) setThemeMenu(false);
@@ -177,3 +222,5 @@ applyTheme(localStorage.getItem('theme'));
 // The first visit gets a sample; a removed image is stored as null, so it stays removed.
 if (!(await localforage.keys()).includes('file')) await localforage.setItem('file', await sampleImage());
 select(location.hash.slice(1));
+// The pill starts in place and only slides from then on.
+requestAnimationFrame(() => tabs.classList.add('ready'));

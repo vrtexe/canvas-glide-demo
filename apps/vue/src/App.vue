@@ -28,8 +28,8 @@ const file = useLocalStorageBlob('file');
       <button class="icon-btn" title="Zoom in" @click="viewer?.zoomIn()">+</button>
       <button class="icon-btn" title="Zoom out" @click="viewer?.zoomOut()">−</button>
       <span class="divider"></span>
-      <button @click="viewer?.center()">Center</button>
-      <button @click="viewer?.fit()">Fit</button>
+      <button data-icon="center" @click="viewer?.center()">Center</button>
+      <button data-icon="fit" @click="viewer?.fit()">Fit</button>
     </div>
   </div>
 
