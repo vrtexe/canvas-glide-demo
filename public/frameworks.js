@@ -6,5 +6,4 @@ export const frameworks = [
   { id: 'vue', name: 'Vue', file: 'src/App.vue' },
   { id: 'qwik', name: 'Qwik', file: 'src/app.tsx' },
   { id: 'angular', name: 'Angular', file: 'src/app/app.ts' },
-  { id: 'fiore', name: 'fiorejs', file: 'src/main.tsx' },
 ];
