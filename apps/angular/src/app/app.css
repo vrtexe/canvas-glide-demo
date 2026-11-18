@@ -215,8 +215,7 @@
   gap: 12px;
 }
 
-.toolbar button,
-.toolbar .upload-btn {
+.toolbar button {
   font: inherit;
   font-size: 14px;
   line-height: 1;
@@ -242,22 +241,19 @@
 /* Hover styles only where a real hover pointer exists — on touch screens
    :hover sticks after a tap and leaves buttons looking pressed. */
 @media (hover: hover) {
-  .toolbar button:hover,
-  .toolbar .upload-btn:hover {
+  .toolbar button:hover {
     background: var(--accent-bg);
     color: var(--text-h);
   }
 }
 
-.toolbar button:active,
-.toolbar .upload-btn:active {
+.toolbar button:active {
   background: var(--accent-border);
   color: #fff;
   transform: scale(0.94);
 }
 
-.toolbar button:focus-visible,
-.toolbar .upload-btn:focus-within {
+.toolbar button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
@@ -289,20 +285,9 @@
   background: var(--surface-border);
 }
 
-.upload-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.upload-btn input {
-  display: none;
-}
-
 /* Bigger touch targets on touch devices (44px is the recommended minimum). */
 @media (pointer: coarse) {
-  .toolbar button,
-  .toolbar .upload-btn {
+  .toolbar button {
     min-height: 44px;
     padding: 10px 14px;
   }

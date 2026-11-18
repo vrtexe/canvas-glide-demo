@@ -11,18 +11,8 @@ const tabRenderer: Record<Tab, Renderer> = { canvas: Renderer.Canvas, img: Rende
 const tabLabel: Record<Tab, string> = { canvas: 'Canvas', img: 'Image', html: 'html' };
 
 const tab = shallowRef<Tab>(Tab.Canvas);
-const upload = useTemplateRef<HTMLInputElement>('upload');
 const viewer = useTemplateRef<InstanceType<typeof GlideCanvas>>('viewer');
-const file = useLocalStorageBlob<File | null>('file', null);
-
-function onUpload(event: Event) {
-  file.set((event.currentTarget as HTMLInputElement).files?.[0] ?? null);
-}
-
-function clear() {
-  if (upload.value) upload.value.value = '';
-  file.set(null);
-}
+const file = useLocalStorageBlob('file');
 
 </script>
 
@@ -40,16 +30,10 @@ function clear() {
       <span class="divider"></span>
       <button @click="viewer?.center()">Center</button>
       <button @click="viewer?.fit()">Fit</button>
-      <span class="divider"></span>
-      <label class="upload-btn">
-        Upload
-        <input ref="upload" type="file" accept="image/*" @change="onUpload" />
-      </label>
-      <button @click="clear">✕</button>
     </div>
   </div>
 
   <div style="width: 100dvw; height: 100dvh; overflow: hidden">
-    <GlideCanvas ref="viewer" :renderer="tabRenderer[tab]" :image="file.value.value" />
+    <GlideCanvas ref="viewer" :renderer="tabRenderer[tab]" :image="file" />
   </div>
 </template>

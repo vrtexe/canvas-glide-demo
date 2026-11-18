@@ -25,9 +25,8 @@ const TabLabel: Record<Tab, string> = {
 
 export const App = component$(() => {
   const tab = useSignal<Tab>(Tab.Canvas);
-  const uploadRef = useSignal<HTMLInputElement>();
   const glide = useGlide();
-  const { file, setFile } = useLocalStorageBlob("file");
+  const file = useLocalStorageBlob("file");
 
   return (
     <>
@@ -54,19 +53,6 @@ export const App = component$(() => {
           <span class="divider" />
           <button onClick$={() => glide.center$()}>Center</button>
           <button onClick$={() => glide.fit$()}>Fit</button>
-          <span class="divider" />
-          <label class="upload-btn">
-            Upload
-            <input ref={uploadRef} type="file" accept="image/*" onChange$={(_, el) => setFile(el.files?.[0] ?? null)} />
-          </label>
-          <button
-            onClick$={() => {
-              if (uploadRef.value) uploadRef.value.value = "";
-              setFile(null);
-            }}
-          >
-            ✕
-          </button>
         </div>
       </div>
 

@@ -18,3 +18,7 @@ for (const { id, file } of selected) {
   cpSync(`${app}/dist`, `dist/${id}`, { recursive: true });
   cpSync(`${app}/${file}`, `dist/${id}/source.txt`);
 }
+
+// The header stores the image with the same localforage build the apps bundle.
+const localforage = frameworks.map(({ id }) => `apps/${id}/node_modules/localforage/dist/localforage.min.js`).find(existsSync);
+cpSync(localforage, 'dist/localforage.min.js');

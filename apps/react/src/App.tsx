@@ -25,13 +25,8 @@ const TabLabel: Record<Tab, string> = {
 
 function App() {
   const [tab, setTab] = useState<Tab>("canvas");
-  const [file, setFile] = useLocalStorageBlob<File | null>("file", null);
-  const uploadRef = useRef<HTMLInputElement>(null);
+  const file = useLocalStorageBlob("file");
   const handleRef = useRef<GlideCanvasRef>(null);
-
-  async function upload(next: File | null) {
-    setFile(next);
-  }
 
   function updateTab(tab: Tab) {
     setTab(tab);
@@ -62,19 +57,6 @@ function App() {
           <span className="divider" />
           <button onClick={() => handleRef.current?.center()}>Center</button>
           <button onClick={() => handleRef.current?.fit()}>Fit</button>
-          <span className="divider" />
-          <label className="upload-btn">
-            Upload
-            <input ref={uploadRef} type="file" accept="image/*" onChange={(e) => upload(e.target.files?.[0] ?? null)} />
-          </label>
-          <button
-            onClick={() => {
-              uploadRef.current!.value = "";
-              upload(null);
-            }}
-          >
-            ✕
-          </button>
         </div>
       </div>
 

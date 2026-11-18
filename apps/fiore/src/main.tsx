@@ -17,15 +17,6 @@ const file = state<Blob | null>(null);
 
 localforage.getItem<Blob>('file').then((saved) => saved && file.set(saved), console.error);
 
-function saveFile(next: Blob | null) {
-  file.set(next);
-  localforage.setItem('file', next).catch(console.error);
-}
-
-const upload = (
-  <input type="file" accept="image/*" onchange={(event) => saveFile(event.currentTarget.files?.[0] ?? null)} />
-) as HTMLInputElement;
-
 document.querySelector('#root')!.append(
   <div class="toolbar toolbar--tabs">
     {tabs.map((tab) => (
@@ -48,19 +39,6 @@ document.querySelector('#root')!.append(
       <span class="divider" />
       <button onclick={glide.center}>Center</button>
       <button onclick={glide.fit}>Fit</button>
-      <span class="divider" />
-      <label class="upload-btn">
-        Upload
-        {upload}
-      </label>
-      <button
-        onclick={() => {
-          upload.value = '';
-          saveFile(null);
-        }}
-      >
-        ✕
-      </button>
     </div>
   </div>,
   <div style={{ width: '100dvw', height: '100dvh', overflow: 'hidden' }}>

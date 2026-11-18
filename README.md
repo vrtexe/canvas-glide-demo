@@ -1,8 +1,8 @@
 # canvas-glide demo
 
-One page that shows [canvas-glide](https://github.com/vrtexe/canvas-glide) in the frameworks it supports: React, Solid, Svelte, Vue, Qwik, Angular and fiorejs, at https://vrtexe.github.io/canvas-glide-demo/. A tab in the header switches the framework; below it is that framework's demo, with the same toolbars in every one: renderer tabs, zoom, Center, Fit, Upload and the theme. The Source button shows the code of the demo that is open.
+One page that shows [canvas-glide](https://github.com/vrtexe/canvas-glide) in the frameworks it supports: React, Solid, Svelte, Vue, Qwik, Angular and fiorejs, at https://vrtexe.github.io/canvas-glide-demo/. The header switches the framework, uploads or removes the image and picks the theme; below it is that framework's demo, with the same toolbars in every one: renderer tabs, zoom, Center and Fit. The Source button shows the code of the demo that is open. The first visit starts with a generated sample grid.
 
-Each framework is an app in `apps/<framework>`, built with the framework's own tooling. The shell in `public/` shows the selected app in an iframe. The apps keep the uploaded image and the theme in the same origin's storage, so switching frameworks keeps both. `shared/README.md` describes what an app has to do.
+Each framework is an app in `apps/<framework>`, built with the framework's own tooling. The shell in `public/` shows the selected app in an iframe. It keeps the image and the theme in the origin's storage, where every app reads them, so switching frameworks keeps both. `shared/README.md` describes what an app has to do.
 
 | Framework | App | Package |
 | --- | --- | --- |

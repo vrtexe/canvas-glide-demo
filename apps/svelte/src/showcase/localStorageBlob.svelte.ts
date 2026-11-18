@@ -1,26 +1,17 @@
 import localforage from 'localforage';
 
-/**
- * Persisted blob state (IndexedDB via localforage). Call during component
- * init. `current` is reactive; `set` updates state and persists.
- */
-export function createLocalStorageBlob<T extends Blob | null>(key: string, initialValue: T) {
-  let value = $state<T>(initialValue);
+/** The blob that the demo's header stored under `key` with localforage, as reactive `current`. Call during component init. */
+export function createLocalStorageBlob(key: string) {
+  let value = $state<Blob | null>(null);
 
   localforage
-    .getItem<T>(key)
-    .then((item) => {
-      if (item !== null) value = item;
-    })
+    .getItem<Blob>(key)
+    .then((item) => (value = item))
     .catch((error) => console.error(error));
 
   return {
     get current() {
       return value;
-    },
-    set(next: T) {
-      value = next;
-      localforage.setItem(key, next).catch((error) => console.error(error));
     },
   };
 }

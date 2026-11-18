@@ -157,6 +157,18 @@ body {
   margin-left: auto;
 }
 
+.upload input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.upload:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .actions > .button,
 .dropdown-trigger {
   border: 1px solid var(--surface-border);

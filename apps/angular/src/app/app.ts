@@ -17,24 +17,11 @@ export class App {
     { value: 'html', label: 'html', renderer: Renderer.Html },
   ];
   protected readonly tab = signal(this.tabs[0]);
-  protected readonly file = signal<File | null>(null);
+  protected readonly file = signal<Blob | null>(null);
 
   constructor() {
-    localforage.getItem<File>('file').then((file) => file && this.file.set(file), (error) => console.error(error));
+    localforage.getItem<Blob>('file').then((file) => file && this.file.set(file), (error) => console.error(error));
   }
 
-  protected onUpload(event: Event) {
-    this.saveFile((event.target as HTMLInputElement).files?.[0] ?? null);
-  }
-
-  protected clear(upload: HTMLInputElement) {
-    upload.value = '';
-    this.saveFile(null);
-  }
-
-  private saveFile(file: File | null) {
-    this.file.set(file);
-    localforage.setItem('file', file).catch((error) => console.error(error));
-  }
 
 }

@@ -1,21 +1,14 @@
 import localforage from 'localforage';
 import { shallowRef } from 'vue';
 
-/** Persisted blob state (IndexedDB via localforage); `set` updates the ref and persists. */
-export function useLocalStorageBlob<T extends Blob | null>(key: string, initialValue: T) {
-  const value = shallowRef<T>(initialValue);
+/** The blob that the demo's header stored under `key` with localforage, or null. */
+export function useLocalStorageBlob(key: string) {
+  const value = shallowRef<Blob | null>(null);
 
   localforage
-    .getItem<T>(key)
-    .then((item) => {
-      if (item !== null) value.value = item;
-    })
+    .getItem<Blob>(key)
+    .then((item) => (value.value = item))
     .catch((error) => console.error(error));
 
-  function set(next: T) {
-    value.value = next;
-    localforage.setItem(key, next).catch((error) => console.error(error));
-  }
-
-  return { value, set };
+  return value;
 }

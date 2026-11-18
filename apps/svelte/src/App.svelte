@@ -24,10 +24,9 @@
   };
 
   let tab = $state<Tab>(Tab.Canvas);
-  let uploadEl = $state<HTMLInputElement>();
   const glide = new Glide();
 
-  const file = createLocalStorageBlob<File | null>('file', null);
+  const file = createLocalStorageBlob('file');
 
 </script>
 
@@ -46,24 +45,6 @@
     <span class="divider"></span>
     <button onclick={() => glide.center()}>Center</button>
     <button onclick={() => glide.fit()}>Fit</button>
-    <span class="divider"></span>
-    <label class="upload-btn">
-      Upload
-      <input
-        bind:this={uploadEl}
-        type="file"
-        accept="image/*"
-        onchange={(e) => file.set(e.currentTarget.files?.[0] ?? null)}
-      />
-    </label>
-    <button
-      onclick={() => {
-        if (uploadEl) uploadEl.value = '';
-        file.set(null);
-      }}
-    >
-      ✕
-    </button>
   </div>
 </div>
 

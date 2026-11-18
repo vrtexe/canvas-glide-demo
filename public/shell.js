@@ -1,5 +1,5 @@
-// The shell is a header over one framework demo in an iframe. The demos keep the image in the same origin's storage,
-// so switching frameworks keeps it; the theme is picked here and reaches the demo through localStorage.
+// The shell is a header over one framework demo in an iframe. The image and the theme are picked here and kept in the
+// origin's storage, where every demo reads them: the image with localforage under `file`, the theme in localStorage.
 import { frameworks } from './frameworks.js';
 
 const tabs = document.querySelector('.tabs');
@@ -7,6 +7,8 @@ const frame = document.querySelector('#frame');
 const sourceButton = document.querySelector('#source');
 const code = document.querySelector('#code');
 
+const fileInput = document.querySelector('#file');
+const clearButton = document.querySelector('#clear');
 const themeButton = document.querySelector('#theme');
 const themeMenu = document.querySelector('#theme-menu');
 
@@ -43,6 +45,41 @@ function chooseTheme(value) {
   applyTheme(value);
   setThemeMenu(false);
   themeButton.focus();
+}
+
+/** A labelled grid, so panning and zooming show where you are and how sharp the image stays. */
+async function sampleImage() {
+  const width = 3000;
+  const height = 2000;
+  const canvas = new OffscreenCanvas(width, height);
+  const context = canvas.getContext('2d');
+  context.fillStyle = '#faf9fb';
+  context.fillRect(0, 0, width, height);
+  for (let x = 0; x <= width; x += 25) {
+    context.fillStyle = x % 250 === 0 ? '#8b84a0' : '#dcd8e4';
+    context.fillRect(x, 0, x % 250 === 0 ? 2 : 1, height);
+  }
+  for (let y = 0; y <= height; y += 25) {
+    context.fillStyle = y % 250 === 0 ? '#8b84a0' : '#dcd8e4';
+    context.fillRect(0, y, width, y % 250 === 0 ? 2 : 1);
+  }
+  context.fillStyle = '#3b3548';
+  context.font = '500 18px ui-monospace, Consolas, monospace';
+  for (let x = 0; x < width; x += 250) {
+    for (let y = 0; y < height; y += 250) context.fillText(`${x},${y}`, x + 8, y + 24);
+  }
+  context.fillStyle = '#aa3bff';
+  context.font = '600 220px system-ui, sans-serif';
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+  context.fillText('canvas-glide', width / 2, height / 2);
+  return canvas.convertToBlob({ type: 'image/png' });
+}
+
+/** Stores the image every demo shows and reloads the open one, because IndexedDB tells other documents nothing. */
+async function storeImage(image) {
+  await localforage.setItem('file', image);
+  frame.contentWindow?.location.reload();
 }
 
 async function showSource(framework) {
@@ -110,6 +147,16 @@ for (const theme of themes) {
   themeMenu.append(item);
 }
 
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files?.[0];
+  if (file) storeImage(file);
+});
+
+clearButton.addEventListener('click', () => {
+  fileInput.value = '';
+  storeImage(null);
+});
+
 themeButton.addEventListener('click', () => setThemeMenu(themeMenu.hidden));
 document.addEventListener('click', (event) => {
   if (!themeMenu.hidden && !event.target.closest('.dropdown')) setThemeMenu(false);
@@ -127,4 +174,6 @@ window.addEventListener('storage', (event) => event.key === 'theme' && applyThem
 window.addEventListener('hashchange', () => select(location.hash.slice(1)));
 
 applyTheme(localStorage.getItem('theme'));
+// The first visit gets a sample; a removed image is stored as null, so it stays removed.
+if (!(await localforage.keys()).includes('file')) await localforage.setItem('file', await sampleImage());
 select(location.hash.slice(1));

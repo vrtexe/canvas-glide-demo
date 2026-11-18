@@ -7,6 +7,7 @@
     <meta name="description" content="Pan, zoom and pinch-to-zoom with canvas-glide in React, Solid, Svelte, Vue, Qwik, Angular and fiorejs." />
     <link rel="icon" type="image/svg+xml" href="./react/favicon.svg" />
     <link rel="stylesheet" href="./shell.css" />
+    <script src="./localforage.min.js"></script>
     <script type="module" src="./shell.js"></script>
   </head>
   <body>
@@ -14,6 +15,11 @@
       <a class="brand" href="https://github.com/vrtexe/canvas-glide">canvas-glide</a>
       <nav class="toolbar tabs" role="tablist" aria-label="Framework"></nav>
       <div class="actions">
+        <label class="button upload">
+          <input id="file" type="file" accept="image/*" />
+          Upload
+        </label>
+        <button id="clear" class="button" type="button" aria-label="Remove the image">✕</button>
         <div class="dropdown">
           <button id="theme" class="button dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-menu">
             <span class="dropdown-value"></span>
