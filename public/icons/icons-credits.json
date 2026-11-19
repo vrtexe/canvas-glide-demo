@@ -147,5 +147,17 @@
     "url": "https://github.com/gilbarbara/logos",
     "trademark": true,
     "markUrl": "https://vuejs.org/"
+  },
+  {
+    "file": "fiore.svg",
+    "icon": "fiore:tile",
+    "name": "fiorejs",
+    "kind": "colour",
+    "source": "vrtexe/fiore@0284a90 docs/assets/brand/fiore-tile.svg",
+    "author": "vrtexe",
+    "licence": "MIT",
+    "url": "https://github.com/vrtexe/fiore",
+    "trademark": true,
+    "markUrl": "https://vrtexe.github.io/fiore/"
   }
 ]
